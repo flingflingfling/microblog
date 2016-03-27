@@ -1,0 +1,28 @@
+from app import app
+from flask import render_template, flash, redirect
+from .forms import LoginForm
+
+#index viem functon suppressed for brevity
+
+@app.route('/')
+@app.route('/index')
+def index():
+    user = {'nickname': 'mandela'}
+    posts = [#fake array of posts
+             {
+                 'author':{'nickname':'jack'},
+                 'body':'Beautify day in Portland!'
+             },
+             {
+                 'author':{ 'nickname':'Susan' },
+                 'body':'The Avengers movie was so cool!'
+             }]
+
+    return render_template("index.html",
+        title = 'e-house' ,
+        user = user,
+        posts = posts)
+
+
+
+
