@@ -7,7 +7,12 @@
         {% endif %}
     </head>
     <body>
-        <div>Microblog: <a href="/index">Home</a></div>
+        <div>Microblog:
+            <a href="/index">Home</a>
+            {% if g.user.is_authenticated %}
+            | <a href="{{ url_for('logout') }}">Logout</a> 
+            {% endif %}
+        </div>
         <hr>
         {% with message = get_flashed_message %}
         {% if messages %}
