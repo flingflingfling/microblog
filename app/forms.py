@@ -1,3 +1,4 @@
+#coding=utf-8
 #!/home/purplemaple/py2/microblog/flaskt/bin/python
 from flask.ext.wtf import Form
 from wtforms import StringField, BooleanField, TextAreaField
@@ -26,6 +27,9 @@ class EditForm(Form):
             self.nickname.errors.append('This nickname is already in use.Please choos another one.')
             return False
         return True
+
+class PostForm(Form):
+    post = StringField('post', validators=[DataRequired()])
 
 
 

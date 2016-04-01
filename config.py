@@ -27,3 +27,7 @@ MAIL_PASSWORD = None
 
 #administrator list
 ADMINS = ['a4512046+flasktest-microblog@gmail.com']
+# pagination:spilt into some pages
+POSTS_PER_PAGE = 3
+
+
