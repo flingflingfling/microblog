@@ -91,4 +91,5 @@ os.path
 app.db
 *.db 
 !.gitignore 
+test.db 
 
