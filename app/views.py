@@ -6,6 +6,7 @@ from .forms import LoginForm, EditForm, PostForm, SearchForm
 from .models import User, Post
 from datetime import datetime
 from config import POSTS_PER_PAGE,MAX_SEARCH_RESULTS
+from .emails import follower_notification
 
 @lm.user_loader
 def load_user(id):
@@ -169,4 +170,13 @@ def search_results(query):
     return render_template('search_results.html',
                            query=query,
                            results=results)
+
+@app.route('/follow/<nickname>')
+@login_required
+def follow(nickname):
+    user = User.query.filter_by(nickname=nickname).first()
+    #...
+    follower_notification(user, g.user)
+    return redirect(url_for('user', nickname=nickname))
+
 
