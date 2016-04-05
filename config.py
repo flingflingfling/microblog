@@ -1,3 +1,4 @@
+#coding=utf-8
 #!/home/purplemaple/py2/microblog/flaskt/bin/python
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))

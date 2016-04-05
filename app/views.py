@@ -129,12 +129,13 @@ def follow(nickname):
         flash('You can\'t follow yourself!')
         return redirect(url_for('user', nickname=nickname))
     u = g.user.follow(user)
-    if u in None:
+    if u is None:
         flash('Cannot follow' + nickname + '.')
         return redirect(url_for('user', nickname=nickname))
     db.session.add(u)
     db.session.commit()
     flash('You are now following' + nickname + '!')
+    follower_notification(user, g.user)
     return redirect(url_for('user', nickname=nickname))
 
 @app.route('/unfollow/<nickname>')
@@ -171,11 +172,7 @@ def search_results(query):
                            query=query,
                            results=results)
 
-@app.route('/follow/<nickname>')
-@login_required
-def follow(nickname):
-    user = User.query.filter_by(nickname=nickname).first()
-    #...
+
     follower_notification(user, g.user)
     return redirect(url_for('user', nickname=nickname))
 
