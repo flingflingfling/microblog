@@ -5,6 +5,12 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 #basedir = '/home/purplemaple/py2/microblog/app'
 #app.config['SQLALCHEMY_TRACK_MODFICATIONS'] = True
 
+LANGUAGES = {
+    'en': 'English',
+    'es': 'Espanish',
+    'zh': 'China'
+}
+
 CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 
