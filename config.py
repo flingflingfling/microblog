@@ -41,4 +41,8 @@ ADMINS = ['a45120466@163.com']
 # pagination:spilt into some pages
 POSTS_PER_PAGE = 3
 
+#translate set (using MS translator)
+MS_TRANSLATOR_CLIENT_ID =''#enter your MS translator app id here
+MS_TRANSLATOR_CLIENT_SECRET = '' #enter your MS translator app secret here.
+
 
