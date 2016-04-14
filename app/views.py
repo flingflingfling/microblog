@@ -1,3 +1,4 @@
+#coding=utf-8
 #!/home/purplemaple/py2/microblog/flaskt/bin/python
 
 from flask import render_template, flash, redirect, session, url_for, request, g, jsonify
@@ -10,6 +11,8 @@ from config import POSTS_PER_PAGE,MAX_SEARCH_RESULTS, LANGUAGES
 from .emails import follower_notification
 from guess_language import guessLanguage
 from translate import microsoft_translate
+from flask.ext.sqlalchemy import get_debug_queries
+from config import DATABASE_QUERY_TIMEOUT
 
 @lm.user_loader
 def load_user(id):
@@ -185,18 +188,35 @@ def search_results(query):
                            query=query,
                            results=results)
 
-
-    follower_notification(user, g.user)
-    return redirect(url_for('user', nickname=nickname))
-
 @app.route('/translate', methods = ['POST'])
 @login_required
 def translate():
     return jsonify({
-        'text': miscrosoft_translate(
+        'text': microsoft_translate(
             request.form['text'],
             request.form['sourceLang'],
             request.form['destLang'])
     })
 
+@app.route('/delete/<int:id>')
+@login_required
+def delete(id):
+    post = Post.query.get(id)
+    if post is None:
+        flash('Post not found.')
+        return redirect(url_for('index'))
+    if post.author.id != g.user.id:
+        flash('You cannot delete this post.')
+        return redirect(url_for('index'))
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your post has been deleted.')
+    return redirect(url_for('index'))
+
+@app.after_request
+def after_request(response):
+    for query in get_debug_queries():
+        if query.duration >= DATABASE_QUERY_TIMEOUT:
+            app.logger.warning("SLOW QUERY: %s\nParameters: %s\nDurations: %fs\nContext: %s\n" %(query.statement, query.parameters, query.duration, query.context))
+    return response
 

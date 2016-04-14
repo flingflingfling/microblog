@@ -26,6 +26,8 @@ MAX_SEARCH_RESULTS = 50
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_respository')
+SQLALCHEMY_RECORD_QUERIES = True
+DATABASE_QUERY_TIMEOUT = 0.5
 
 #mail server settings
 MAIL_SERVER = 'smtp.163.com'
