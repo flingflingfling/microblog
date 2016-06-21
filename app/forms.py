@@ -1,13 +1,15 @@
-#coding=utf-8
-#!/home/purplemaple/py2/microblog/flaskt/bin/python
+# coding=utf-8
+# !/home/purplemaple/py2/microblog/flaskt/bin/python
 from flask.ext.wtf import Form
 from wtforms import StringField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length
 from app.models import User
 
+
 class LoginForm(Form):
     openid = StringField('openid', validators=[DataRequired()])
     remember_me = BooleanField('remember_me', default=False)
+
 
 class EditForm(Form):
     nickname = StringField('nickname', validators=[DataRequired()])
@@ -28,10 +30,10 @@ class EditForm(Form):
             return False
         return True
 
+
 class PostForm(Form):
     post = StringField('post', validators=[DataRequired()])
 
+
 class SearchForm(Form):
     search = StringField('search', validators=[DataRequired()])
-
-
