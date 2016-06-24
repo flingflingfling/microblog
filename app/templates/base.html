@@ -25,7 +25,7 @@
                 $(loadingId).hide();
                 $(destId).show();
             }).fail(function() {
-                $(destId).text("{{ _('Error: Could not contact server.') }}");
+                $(destId).text("{{('Error: Could not contact server.') }}");
                 $(loadingId).hide();
                 $(destId).show();
     });

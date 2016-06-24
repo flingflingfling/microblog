@@ -11,8 +11,8 @@ import os.path
 
 
 db.create_all()
-if not os.path.exists(SQLALCHEMY_MIGRATE_REPO):
-    api.create(SQLALCHEMY_MIGRATE_REPO, 'database repository')
+if not os.path.exists(SQLALCHEMY_MIGRATE_REPO): #test if the repo exist
+    api.create(SQLALCHEMY_MIGRATE_REPO, 'database repository')  #creat database
     api.version_control(SQLALCHEMY_DATABASE_URI ,SQLALCHEMY_MIGRATE_REPO )
 else:
     api.version_control(SQLALCHEMY_DATABASE_URI ,SQLALCHEMY_MIGRATE_REPO, api.version(SQLALCHEMY_MIGRATE_REPO))

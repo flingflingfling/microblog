@@ -1,18 +1,20 @@
 # coding=utf-8
 # !/home/purplemaple/py2/microblog/flaskt/bin/python
 
-from flask import render_template, flash, redirect, session, url_for, request, g, jsonify
-from flask.ext.login import login_user, logout_user, current_user, login_required
-from app import app, db, lm, oid, babel
+from flask import render_template, flash, redirect, session,\
+    url_for, request, g, jsonify
+from flask.ext.login import login_user, logout_user, current_user,\
+    login_required
+from flask.ext.sqlalchemy import get_debug_queries
+from app import app, db, lm, oid
 from .forms import LoginForm, EditForm, PostForm, SearchForm
 from .models import User, Post
-from datetime import datetime
-from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES
 from .emails import follower_notification
+from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES,\
+    DATABASE_QUERY_TIMEOUT
 from guess_language import guessLanguage
+from datetime import datetime
 # from translate import microsoft_translate
-from flask.ext.sqlalchemy import get_debug_queries
-from config import DATABASE_QUERY_TIMEOUT
 
 
 @lm.user_loader
@@ -20,9 +22,9 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-@babel.localeselector
-def get_locale():
-    return request.accept_languages.best_match(LANGUAGES.keys())
+#@babel.localeselector
+#def get_locale():
+#    return request.accept_languages.best_match(LANGUAGES.keys())
 
 
 @app.before_request
@@ -202,7 +204,7 @@ def search_results(query):
                            query=query,
                            results=results)
 
-
+'''
 @app.route('/translate', methods=['POST'])
 @login_required
 def translate():
@@ -212,7 +214,7 @@ def translate():
             request.form['sourceLang'],
             request.form['destLang'])
     })
-
+'''
 
 @app.route('/delete/<int:id>')
 @login_required
@@ -234,6 +236,9 @@ def delete(id):
 def after_request(response):
     for query in get_debug_queries():
         if query.duration >= DATABASE_QUERY_TIMEOUT:
-            app.logger.warning("SLOW QUERY: %s\nParameters: %s\nDurations: %fs\nContext: %s\n" % (
-            query.statement, query.parameters, query.duration, query.context))
+            app.logger.warning(
+            "SLOW QUERY: %s\nParameters: %s\nDurations: %fs\nContext: %s\n" %
+            (query.statement, query.parameters, query.duration, query.context))
     return response
+
+
